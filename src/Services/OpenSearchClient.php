@@ -69,7 +69,7 @@ class OpenSearchClient
             'body' => [
                 'query' => [
                     'simple_query_string' => [
-                        'query' => "*$query*",
+                        'query' => !empty($query) ? "*$query*" : "*",
                         'analyze_wildcard' => true,
                     ],
                 ],

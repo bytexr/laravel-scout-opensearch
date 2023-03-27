@@ -3,7 +3,6 @@
 namespace ByteXR\LaravelScoutOpenSearch;
 
 use ByteXR\LaravelScoutOpenSearch\Engines\OpenSearchEngine;
-use ByteXR\LaravelScoutOpenSearch\Exceptions\OnlyAWSOrBasicAuthCredentials;
 use ByteXR\LaravelScoutOpenSearch\Services\OpenSearchClient;
 use Laravel\Scout\EngineManager;
 use OpenSearch\ClientBuilder;
