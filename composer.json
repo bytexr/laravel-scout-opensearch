@@ -1,0 +1,27 @@
+{
+    "name": "bytexr/laravel-scout-opensearch",
+    "autoload": {
+        "psr-4": {
+            "ByteXR\\LaravelScoutOpenSearch\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Eddie Rusinskas",
+            "email": "info@imphus.com"
+        }
+    ],
+    "require": {
+        "laravel/scout": "^8.0|^9.0|^10.0",
+        "illuminate/database": "^8.0|^9.0|^10.0",
+        "illuminate/support": "^8.0|^9.0|^10.0",
+        "opensearch-project/opensearch-php": "^2.1"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ByteXR\\LaravelScoutOpenSearch\\LaravelScoutOpenSearchServiceProvider"
+            ]
+        }
+    }
+}
