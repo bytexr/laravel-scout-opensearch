@@ -28,7 +28,7 @@ class LaravelScoutOpenSearchServiceProvider extends \Illuminate\Support\ServiceP
                     'key' => config('scout.opensearch.aws_access_key'),
                     'secret' => config('scout.opensearch.aws_secret_key'),
                 ])
-                ->setSigV4Region(confiig('scout.opensearch.aws_region'))
+                ->setSigV4Region(config('scout.opensearch.aws_region'))
                 ->build();
         }
 
