@@ -23,5 +23,8 @@
                 "ByteXR\\LaravelScoutOpenSearch\\LaravelScoutOpenSearchServiceProvider"
             ]
         }
+    },
+    "require-dev": {
+        "laravel/pint": "^1.7"
     }
 }

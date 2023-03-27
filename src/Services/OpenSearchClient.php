@@ -14,14 +14,14 @@ class OpenSearchClient
     public function createIndex(string $index): void
     {
         $this->client->indices()->create([
-            "index" => $index
+            'index' => $index,
         ]);
     }
 
     public function deleteIndex(string $index): void
     {
         $this->client->indices()->delete([
-            "index" => $index
+            'index' => $index,
         ]);
     }
 
@@ -31,17 +31,17 @@ class OpenSearchClient
 
         $models->each(function ($model) use ($index, &$data) {
             $data[] = [
-                "index" => [
-                    "_index" => $index,
-                    "_id"    => $model['objectID']
+                'index' => [
+                    '_index' => $index,
+                    '_id' => $model['objectID'],
                 ],
             ];
             $data[] = $model;
         });
 
         return $this->client->bulk([
-            "index" => $index,
-            "body"  => $data
+            'index' => $index,
+            'body' => $data,
         ]);
     }
 
@@ -49,16 +49,16 @@ class OpenSearchClient
     {
         $data = $keys->map(function ($key) use ($index) {
             return [
-                "delete" => [
-                    "_index" => $index,
-                    "_id"    => $key
+                'delete' => [
+                    '_index' => $index,
+                    '_id' => $key,
                 ],
             ];
         })->toArray();
 
         return $this->client->bulk([
-            "index" => $index,
-            "body"  => $data
+            'index' => $index,
+            'body' => $data,
         ]);
     }
 
@@ -66,14 +66,14 @@ class OpenSearchClient
     {
         return $this->client->search(array_merge([
             'index' => $index,
-            'body'  => [
+            'body' => [
                 'query' => [
                     'simple_query_string' => [
-                        'query'            => "*$query*",
-                        'analyze_wildcard' => true
-                    ]
-                ]
-            ]
+                        'query' => "*$query*",
+                        'analyze_wildcard' => true,
+                    ],
+                ],
+            ],
         ], $options));
     }
 }

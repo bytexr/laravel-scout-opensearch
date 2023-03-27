@@ -2,34 +2,29 @@
 
 namespace ByteXR\LaravelScoutOpenSearch\Engines;
 
+use ByteXR\LaravelScoutOpenSearch\Services\OpenSearchClient;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\LazyCollection;
 use Laravel\Scout\Builder;
 use Laravel\Scout\Jobs\RemoveableScoutCollection;
-use ByteXR\LaravelScoutOpenSearch\Services\OpenSearchClient;
 
 class OpenSearchEngine extends \Laravel\Scout\Engines\Engine
 {
     /**
      * Create a new engine instance.
      *
-     * @param OpenSearchClient $openSearch
-     * @param bool $softDelete
      * @return void
      */
     public function __construct(
         protected OpenSearchClient $openSearch,
         protected bool $softDelete = false
-    )
-    {
+    ) {
     }
 
     /**
      * Update the given model in the index.
      *
-     * @param \Illuminate\Database\Eloquent\Collection $models
-     * @return void
-     *
+     * @param  \Illuminate\Database\Eloquent\Collection  $models
      */
     public function update($models): void
     {
@@ -55,7 +50,7 @@ class OpenSearchEngine extends \Laravel\Scout\Engines\Engine
             );
         })->filter()->values();
 
-        if (!empty($objects)) {
+        if (! empty($objects)) {
             $this->openSearch->bulkUpdate($index, $objects);
         }
     }
@@ -63,7 +58,7 @@ class OpenSearchEngine extends \Laravel\Scout\Engines\Engine
     /**
      * Remove the given model from the index.
      *
-     * @param \Illuminate\Database\Eloquent\Collection $models
+     * @param  \Illuminate\Database\Eloquent\Collection  $models
      * @return void
      */
     public function delete($models)
@@ -84,21 +79,18 @@ class OpenSearchEngine extends \Laravel\Scout\Engines\Engine
     /**
      * Perform the given search on the engine.
      *
-     * @param \Laravel\Scout\Builder $builder
      * @return mixed
      */
     public function search(Builder $builder)
     {
         return $this->performSearch($builder, array_filter([
-            'size'    => $builder->limit,
+            'size' => $builder->limit,
         ]));
     }
 
     /**
      * Perform the given search on the engine.
      *
-     * @param \Laravel\Scout\Builder $builder
-     * @param array $options
      * @return mixed
      */
     protected function performSearch(Builder $builder, array $options = [])
@@ -125,9 +117,6 @@ class OpenSearchEngine extends \Laravel\Scout\Engines\Engine
 
     /**
      * Determine if the given model uses soft deletes.
-     *
-     * @param \Illuminate\Database\Eloquent\Model $model
-     * @return bool
      */
     protected function usesSoftDelete(\Illuminate\Database\Eloquent\Model $model): bool
     {
@@ -137,8 +126,8 @@ class OpenSearchEngine extends \Laravel\Scout\Engines\Engine
     public function paginate(Builder $builder, $perPage, $page)
     {
         return $this->performSearch($builder, [
-            "size" => $perPage,
-            "from" => ($page - 1) * $perPage
+            'size' => $perPage,
+            'from' => ($page - 1) * $perPage,
         ]);
     }
 
