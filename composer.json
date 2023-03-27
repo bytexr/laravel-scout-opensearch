@@ -1,5 +1,8 @@
 {
     "name": "bytexr/laravel-scout-opensearch",
+    "description": "Laravel Scout OpenSearch Engine",
+    "keywords": ["opensearch", "laravel", "search", "scout", "aws"],
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "ByteXR\\LaravelScoutOpenSearch\\": "src/"
