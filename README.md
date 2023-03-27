@@ -23,12 +23,15 @@ return [
     ...
 
     'opensearch' => [
+        // default - this provider will use basic authentication username and password
+        // aws - this provider will use AWS credentials to authenticate 
+        "provider"         => env('OPENSEARCH_PROVIDER', 'default'),
         "host"             => env('OPENSEARCH_HOST', 'https://localhost:9200'),
         "username"         => env('OPENSEARCH_USERNAME', 'admin'),
         "password"         => env('OPENSEARCH_PASSWORD', 'admin'),
         "ssl_verification" => env("OPENSEARCH_SSL_VERIFICATION", true),
 
-        // Only necessary if project is using AWS OpenSearch
+        // Only necessary if project is using AWS provider
         "aws_access_key"   => env('OPENSEARCH_AWS_ACCESS_KEY'),
         "aws_secret_key"   => env('OPENSEARCH_AWS_SECRET_KEY'),
         "aws_region"       => env('OPENSEARCH_AWS_REGION', 'eu-west-1'),

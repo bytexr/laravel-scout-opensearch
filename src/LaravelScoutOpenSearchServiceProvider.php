@@ -21,28 +21,21 @@ class LaravelScoutOpenSearchServiceProvider extends \Illuminate\Support\ServiceP
 
     private function createOpenSearchClient(): \OpenSearch\Client
     {
-        if (
-            (config('scout.opensearch.username') || config('scout.opensearch.password')) &&
-            (config('scout.opensearch.aws_access_key') || config('scout.opensearch.aws_secret_key'))
-        ) {
-            throw new OnlyAWSOrBasicAuthCredentials('Your OpenSearch configuration should have onlu AWS or Basic Auth credentials and not both.');
-        }
-
-        if (config('scout.opensearch.username')) {
+        if (config('scout.opensearch.provider') == "aws") {
             return (new ClientBuilder())
                 ->setHosts([config('scout.opensearch.host')])
-                ->setSSLVerification(config('scout.opensearch.ssl_verification', true))
-                ->setBasicAuthentication(config('scout.opensearch.username'), config('scout.opensearch.password'))
+                ->setSigV4CredentialProvider([
+                    'key' => config('scout.opensearch.aws_access_key'),
+                    'secret' => config('scout.opensearch.aws_secret_key'),
+                ])
+                ->setSigV4Region(confiig('scout.opensearch.aws_region'))
                 ->build();
         }
 
         return (new ClientBuilder())
             ->setHosts([config('scout.opensearch.host')])
-            ->setSigV4CredentialProvider([
-                'key' => config('scout.opensearch.aws_access_key'),
-                'secret' => config('scout.opensearch.aws_secret_key'),
-            ])
-            ->setSigV4Region(confiig('scout.opensearch.aws_region'))
+            ->setSSLVerification(config('scout.opensearch.ssl_verification', true))
+            ->setBasicAuthentication(config('scout.opensearch.username'), config('scout.opensearch.password'))
             ->build();
     }
 }
