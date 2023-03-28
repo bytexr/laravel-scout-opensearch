@@ -5,7 +5,6 @@ namespace ByteXR\LaravelScoutOpenSearch;
 use ByteXR\LaravelScoutOpenSearch\Engines\OpenSearchEngine;
 use ByteXR\LaravelScoutOpenSearch\Services\OpenSearchClient;
 use Laravel\Scout\EngineManager;
-use OpenSearch\ClientBuilder;
 
 class LaravelScoutOpenSearchServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -13,28 +12,28 @@ class LaravelScoutOpenSearchServiceProvider extends \Illuminate\Support\ServiceP
     {
         resolve(EngineManager::class)->extend('opensearch', function () {
             return new OpenSearchEngine(
-                new OpenSearchClient($this->createOpenSearchClient())
+                new OpenSearchClient($this->createOpenSearchClient()),
+                config('scout.soft_delete')
             );
         });
     }
 
     private function createOpenSearchClient(): \OpenSearch\Client
     {
-        if (config('scout.opensearch.provider') == "aws") {
-            return (new ClientBuilder())
-                ->setHosts([config('scout.opensearch.host')])
-                ->setSigV4CredentialProvider([
-                    'key' => config('scout.opensearch.aws_access_key'),
-                    'secret' => config('scout.opensearch.aws_secret_key'),
-                ])
-                ->setSigV4Region(config('scout.opensearch.aws_region'))
-                ->build();
+        $client = (new \OpenSearch\ClientBuilder())
+            ->setHosts([config('scout.opensearch.host')])
+            ->setSSLVerification(config('scout.opensearch.options.ssl_verification'));
+
+        if (config('scout.opensearch.options.sigv4_enabled')) {
+            $client = $client->setSigV4CredentialProvider([
+                'key' => config('scout.opensearch.access_key'),
+                'secret' => config('scout.opensearch.secret_key'),
+            ])
+                             ->setSigV4Region(config('scout.opensearch.options.sigv4_region'));
+        } else {
+            $client = $client->setBasicAuthentication(config('scout.opensearch.access_key'), config('scout.opensearch.secret_key'));
         }
 
-        return (new ClientBuilder())
-            ->setHosts([config('scout.opensearch.host')])
-            ->setSSLVerification(config('scout.opensearch.ssl_verification', true))
-            ->setBasicAuthentication(config('scout.opensearch.username'), config('scout.opensearch.password'))
-            ->build();
+        return $client->build();
     }
 }
