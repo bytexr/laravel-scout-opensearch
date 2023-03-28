@@ -66,12 +66,23 @@ class OpenSearchClient
     {
         return $this->client->search(array_merge([
             'index' => $index,
-            'body' => [
+            'body'  => [
                 'query' => [
-                    'simple_query_string' => [
-                        'query' => !empty($query) ? "*$query*" : "*",
-                        'analyze_wildcard' => true,
-                    ],
+                    'bool' => [
+                        'should' => [
+                            [
+                                'query_string' => [
+                                    'query' => !empty($query) ? "*$query*" : "*",
+                                ]
+                            ],
+                            [
+                                'multi_match' => [
+                                    'query' => $query,
+                                ]
+                            ]
+                        ]
+                    ]
+                    ,
                 ],
             ],
         ], $options));
