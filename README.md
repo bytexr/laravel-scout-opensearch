@@ -24,8 +24,8 @@ return [
 
     'opensearch' => [
         'host' => env('OPENSEARCH_HOST', 'http://localhost:9200'),
-        'access_key' => env('OPENSEARCH_ACCESS_KEY'),
-        'secret_key' => env('OPENSEARCH_SECRET_KEY'),
+        'access_key' => env('OPENSEARCH_ACCESS_KEY', 'admin'),
+        'secret_key' => env('OPENSEARCH_SECRET_KEY', 'admin'),
         'options' => [
             'ssl_verification' => env('OPENSEARCH_SSL_VERIFICATION', true),
             // Used for AWS
