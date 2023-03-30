@@ -23,7 +23,7 @@ return [
     ...
 
     'opensearch' => [
-        'host' => env('OPENSEARCH_HOST', 'http://localhost:9200'),
+        'host' => env('OPENSEARCH_HOST', 'https://localhost:9200'),
         'access_key' => env('OPENSEARCH_ACCESS_KEY', 'admin'),
         'secret_key' => env('OPENSEARCH_SECRET_KEY', 'admin'),
         'options' => [
