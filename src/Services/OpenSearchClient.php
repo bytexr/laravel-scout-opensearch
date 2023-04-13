@@ -73,13 +73,13 @@ class OpenSearchClient
                             [
                                 'query_string' => [
                                     'query'    => !empty($query) ? "*$query*" : '*',
-                                    'analyzer' => 'whitespace',
+                                    'analyzer' => 'keyword',
                                 ],
                             ],
                             [
                                 'multi_match' => [
                                     'query'    => $query,
-                                    'analyzer' => 'whitespace',
+                                    'analyzer' => 'keyword',
                                 ],
                             ],
                         ],
