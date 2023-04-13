@@ -33,7 +33,7 @@ class OpenSearchClient
             $data[] = [
                 'index' => [
                     '_index' => $index,
-                    '_id' => $model['objectID'],
+                    '_id'    => $model['objectID'],
                 ],
             ];
             $data[] = $model;
@@ -41,7 +41,7 @@ class OpenSearchClient
 
         return $this->client->bulk([
             'index' => $index,
-            'body' => $data,
+            'body'  => $data,
         ]);
     }
 
@@ -51,14 +51,14 @@ class OpenSearchClient
             return [
                 'delete' => [
                     '_index' => $index,
-                    '_id' => $key,
+                    '_id'    => $key,
                 ],
             ];
         })->toArray();
 
         return $this->client->bulk([
             'index' => $index,
-            'body' => $data,
+            'body'  => $data,
         ]);
     }
 
@@ -66,23 +66,24 @@ class OpenSearchClient
     {
         return $this->client->search(array_merge([
             'index' => $index,
-            'body' => [
+            'body'  => [
                 'query' => [
                     'bool' => [
-                        'should' => [
+                        'should'               => [
                             [
                                 'query_string' => [
-                                    'query' => ! empty($query) ? "*$query*" : '*',
-                                    'analyzer' => 'keyword',
+                                    'query'    => !empty($query) ? "*$query*" : '*',
+                                    'analyzer' => 'whitespace',
                                 ],
                             ],
                             [
                                 'multi_match' => [
-                                    'query' => $query,
-                                    'analyzer' => 'keyword',
+                                    'query'    => $query,
+                                    'analyzer' => 'whitespace',
                                 ],
                             ],
                         ],
+                        'minimum_should_match' => 1
                     ],
                 ],
             ],
