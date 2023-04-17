@@ -69,21 +69,13 @@ class OpenSearchClient
             'body'  => [
                 'query' => [
                     'bool' => [
-                        'should'               => [
+                        'must' => [
                             [
-                                'query_string' => [
-                                    'query'    => !empty($query) ? "*$query*" : '*',
-                                    'analyzer' => 'keyword',
-                                ],
-                            ],
-                            [
-                                'multi_match' => [
-                                    'query'    => $query,
-                                    'analyzer' => 'keyword',
+                                'simple_query_string' => [
+                                    'query' => "\"$query\""
                                 ],
                             ],
                         ],
-                        'minimum_should_match' => 1
                     ],
                 ],
             ],
