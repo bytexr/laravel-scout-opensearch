@@ -72,8 +72,9 @@ class OpenSearchClient
                         'must' => [
                             [
                                 'simple_query_string' => [
-                                    'query'            => "*$query*",
-                                    'default_operator' => 'and'
+                                    'query'            => "$query*",
+                                    'default_operator' => 'and',
+                                    'analyzer'         => 'simple'
                                 ],
                             ],
                         ],
