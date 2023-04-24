@@ -67,6 +67,7 @@ class OpenSearchClient
         return $this->client->search(array_merge([
             'index' => $index,
             'body'  => [
+                'size' => 1000,
                 'query' => [
                     'bool' => [
                         'must' => [
