@@ -28,8 +28,8 @@ class OpenSearchClient
     public function bulkUpdate(string $index, $models): callable|array
     {
         $data = [];
-
         $models->each(function ($model) use ($index, &$data) {
+
             $data[] = [
                 'index' => [
                     '_index' => $index,
@@ -67,18 +67,11 @@ class OpenSearchClient
         return $this->client->search(array_merge([
             'index' => $index,
             'body'  => [
-                'size' => 1000,
+                'size'  => 1000,
                 'query' => [
-                    'bool' => [
-                        'must' => [
-                            [
-                                'simple_query_string' => [
-                                    'query'            => "$query*",
-                                    'default_operator' => 'and',
-                                    'analyzer'         => 'simple'
-                                ],
-                            ],
-                        ],
+                    'simple_query_string' => [
+                        'query'            => "$query* | \"$query\"",
+                        'default_operator' => 'and'
                     ],
                 ],
             ],
