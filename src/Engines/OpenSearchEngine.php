@@ -70,7 +70,7 @@ class OpenSearchEngine extends \Laravel\Scout\Engines\Engine
         $index = $models->first()->searchableAs();
 
         $keys = $models instanceof RemoveableScoutCollection
-            ? $models->pluck($models->first()->getUnqualifiedScoutKeyName())
+            ? $models->pluck($models->first()->getScoutKeyName())
             : $models->map->getScoutKey();
 
         $this->openSearch->bulkDelete($index, $keys);
