@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "laravel/scout": "^11.0",
+        "laravel/scout": "^10.9",
         "illuminate/database": "^11.0",
         "illuminate/support": "^11.0",
         "opensearch-project/opensearch-php": "^2.1"
