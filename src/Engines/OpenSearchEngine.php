@@ -108,10 +108,12 @@ class OpenSearchEngine extends \Laravel\Scout\Engines\Engine
             );
         }
 
+        $filters = $this->filters($builder);
+
         return $this->openSearch->search(
             $index,
             $builder->query,
-            $options
+            array_merge_recursive($options, $filters),
         );
     }
 
@@ -175,6 +177,25 @@ class OpenSearchEngine extends \Laravel\Scout\Engines\Engine
         })->sortBy(function ($model) use ($objectIdPositions) {
             return $objectIdPositions[$model->getScoutKey()];
         })->values();
+    }
+
+    protected function filters(Builder $builder): array
+    {
+        if(empty($builder->wheres)) {
+            return [];
+        }
+
+        return [
+            'body' => [
+                'query' => [
+                    'bool' => [
+                        'filter' => [
+                            ['term' =>  $builder->wheres]
+                        ]
+                    ]
+                ]
+            ]
+        ];
     }
 
     public function getTotalCount($results)

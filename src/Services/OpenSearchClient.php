@@ -64,17 +64,23 @@ class OpenSearchClient
 
     public function search(string $index, string $query, array $options = [])
     {
-        return $this->client->search(array_merge([
+        $params = array_merge_recursive([
             'index' => $index,
-            'body'  => [
-                'size'  => 1000,
+            'body' => [
+                'size' => 1000,
                 'query' => [
-                    'simple_query_string' => [
-                        'query'            => "$query* | \"$query\"",
-                        'default_operator' => 'and'
-                    ],
+                    'bool' => [
+                        'must' => [
+                            'simple_query_string' => [
+                                'query' => "$query* | \"$query\"",
+                                'default_operator' => 'and'
+                            ],
+                        ]
+                    ]
                 ],
             ],
-        ], $options));
+        ], $options);
+
+        return $this->client->search($params);
     }
 }

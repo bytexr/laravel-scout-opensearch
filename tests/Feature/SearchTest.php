@@ -10,7 +10,7 @@ beforeEach(function () {
         (new \OpenSearch\ClientBuilder())
             ->setHosts(["https://127.0.0.1:9200"])
             ->setSSLVerification(false)
-            ->setBasicAuthentication("admin", "admin")
+            ->setBasicAuthentication("admin", "oDLx8Bfs4G86")
             ->build()
     );
     $this->engine = new OpenSearchEngine($this->openSearch);
@@ -90,4 +90,12 @@ it('can search by house number', function () {
     $count = $this->engine->getTotalCount($this->openSearch->search($this->index, "456"));
 
     expect($count)->toBe(1);
+});
+
+it('can search with a scout where clause', function () {
+    $builder = new \Laravel\Scout\Builder(stdClass::class, 'Isle');
+    $builder->index = $this->index;
+    $builder->where('rating', 5);
+    $results = $this->engine->search($builder);
+    expect($results['hits']['total']['value'])->toBe(2);
 });
