@@ -1,7 +1,7 @@
 [
-  { "objectID": 1, "name": "Greenwood Paper Factory", "address_line_1": "123 Shore road", "address_postcode": "AX1 BT2", "email": "greenwood+email@example.com" },
-  { "objectID": 2, "name": "Blackwood Paper Factory", "address_line_1": "456 London street", "address_postcode": "TY8 XC3", "email": "blackwood+email@example.com" },
-  { "objectID": 3, "name": "Isle of Green Company", "address_line_1": "756 Brussels avenue", "address_postcode": "HY7 TJ8", "email": "info@isleofgreen.com" },
-  { "objectID": 4, "name": "Isle of Purple Company", "address_line_1": "7 Purple avenue", "address_postcode": "XV1 KI9", "email": "info@iop.com" },
-  { "objectID": 5, "name": "True storage solutions", "address_line_1": "Isle of green", "address_postcode": "UI8 GH5", "email": "help@truestoragesolutions.co.uk" }
+  { "objectID": 1, "name": "Greenwood Paper Factory", "address_line_1": "123 Shore road", "address_postcode": "AX1 BT2", "email": "greenwood+email@example.com", "rating": 1 },
+  { "objectID": 2, "name": "Blackwood Paper Factory", "address_line_1": "456 London street", "address_postcode": "TY8 XC3", "email": "blackwood+email@example.com", "rating": 5},
+  { "objectID": 3, "name": "Isle of Green Company", "address_line_1": "756 Brussels avenue", "address_postcode": "HY7 TJ8", "email": "info@isleofgreen.com", "rating": 5 },
+  { "objectID": 4, "name": "Isle of Purple Company", "address_line_1": "7 Purple avenue", "address_postcode": "XV1 KI9", "email": "info@iop.com", "rating": 5 },
+  { "objectID": 5, "name": "True storage solutions", "address_line_1": "Isle of green", "address_postcode": "UI8 GH5", "email": "help@truestoragesolutions.co.uk", "rating": 2 }
 ]
