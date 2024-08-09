@@ -40,6 +40,34 @@ return [
 
 Finally, ensure that all required environment variables are set in your `.env` file, and don't forget to set the `SCOUT_DRIVER` value to `opensearch`.
 
+## Explicit Mapping
+
+Should you need to specifically define the mapping for your indexes, you can do so by setting the `index-settings` key in config/scout.php as follows:
+
+```php
+return [
+    ...
+    
+    'opensearch' => [
+        ...
+        'index-settings' => [
+            Post::class => [
+                'mappings' => [
+                    'properties' => [
+                        'id' => [
+                            'type' => 'text',
+                        ],
+                        'title' => [
+                            'type' => 'text',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ]
+]
+```
+
 ## License
 
 Laravel Scout OpenSearch is open-sourced software licensed under the [MIT license](LICENSE).
