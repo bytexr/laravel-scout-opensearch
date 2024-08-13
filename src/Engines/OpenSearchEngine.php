@@ -210,11 +210,21 @@ class OpenSearchEngine extends \Laravel\Scout\Engines\Engine
 
     public function createIndex($name, array $options = [])
     {
-        $this->openSearch->createIndex($name);
+        $this->openSearch->createIndex($name, $options);
+    }
+
+    public function updateIndexSettings($name, array $options = [])
+    {
+        $this->openSearch->updateIndex($name, $options);
     }
 
     public function deleteIndex($name)
     {
         $this->openSearch->deleteIndex($name);
+    }
+
+    public function deleteAllIndexes()
+    {
+        $this->openSearch->deleteAllIndexes();
     }
 }

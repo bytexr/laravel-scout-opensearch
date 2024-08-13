@@ -11,11 +11,34 @@ class OpenSearchClient
     {
     }
 
-    public function createIndex(string $index): void
+    public function createIndex(string $index, array $options = []): void
     {
-        $this->client->indices()->create([
+        $data = [
             'index' => $index,
-        ]);
+        ];
+
+        if ($options) {
+            $data['body'] = $options;
+        }
+
+        $this->client->indices()->create($data);
+    }
+
+    public function updateIndex(string $index, array $options = []): void
+    {
+        if (!$this->client->indices()->exists(['index' => $index])) {
+            $this->createIndex($index, $options);
+        } else {
+            $data = [
+                'index' => $index,
+            ];
+
+            if ($options) {
+                $data['body'] = $options;
+            }
+
+            $this->client->indices()->putMapping($data);
+        }
     }
 
     public function deleteIndex(string $index): void
@@ -25,11 +48,15 @@ class OpenSearchClient
         ]);
     }
 
+    public function deleteAllIndexes(): void
+    {
+        $this->client->indices()->delete(['index' => '*']);
+    }
+
     public function bulkUpdate(string $index, $models): callable|array
     {
         $data = [];
         $models->each(function ($model) use ($index, &$data) {
-
             $data[] = [
                 'index' => [
                     '_index' => $index,
